@@ -11,7 +11,8 @@ class App:
     def __init__(self, window, file_path, sort_path):
         self.window = window
         self.window.title('Sort Directories')
-        self.sort_path = ''
+        self.sort_path = sort_path
+        self.file_path = file_path
 
         self.dirs = ['media', 'img', 'text', 'packages', 'code', 'other']
         self.exts = [
@@ -25,7 +26,7 @@ class App:
         # Browser
         self.browse_label = Label(master = window, text = 'Browse your directory:')
         self.browse_label.grid(row = 0, column = 0)
-        self.folder_path = StringVar(value = 'Folder path...')
+        self.folder_path = StringVar(value = self.sort_path)
         self.folder_label = Label(master = window, borderwidth = 2, relief = 'sunken', textvariable = self.folder_path)
         self.folder_label.config(bg = 'white')
         self.folder_label.grid(row = 1, column = 0)
@@ -45,10 +46,15 @@ class App:
 
     def browse_button(self):
         dirname = filedialog.askdirectory()
-        self.folder_path.set(dirname)
-        self.sort_path = os.path.abspath(str(self.folder_path.get()))
-        self.sort_path += '/'
-        # print(self.sort_path)
+        if str(self.folder_path.get()) != '':
+            self.folder_path.set(dirname)
+            file = open(self.file_path, 'w')
+            x = os.path.abspath(str(self.folder_path.get()))
+            file.write(x)
+            file.close()
+
+            self.sort_path = os.path.abspath(str(self.folder_path.get()))
+            self.sort_path += '/'
 
     def make_dirs(self):
         for dir in self.dirs:
@@ -89,6 +95,7 @@ if __name__ == '__main__':
     if os.path.isfile(file_path):
         file = open(file_path, 'r')
         sort_path = file.read()
+        sort_path += '/'
     else:
         file = open(file_path, 'w')
 
