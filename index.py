@@ -50,11 +50,18 @@ class App:
             self.folder_path.set(dirname)
             file = open(self.file_path, 'w')
             x = os.path.abspath(str(self.folder_path.get()))
+            # x += '/'
             file.write(x)
             file.close()
 
             self.sort_path = os.path.abspath(str(self.folder_path.get()))
             self.sort_path += '/'
+        
+        #else:
+            # self.sort_path = os.path.abspath(str(self.folder_path.get()))
+            # self.sort_path += '/'
+            # self.folder_path.set(dirname)
+        print(self.sort_path)
 
     def make_dirs(self):
         for dir in self.dirs:
