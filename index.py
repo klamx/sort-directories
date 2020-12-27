@@ -8,7 +8,7 @@ from tkinter import filedialog
 from tkinter import *
 
 class App:
-    def __init__(self, window):
+    def __init__(self, window, file_path, sort_path):
         self.window = window
         self.window.title('Sort Directories')
         self.sort_path = ''
@@ -84,6 +84,16 @@ class App:
 
 
 if __name__ == '__main__':
+    file_path = 'path.txt'
+    sort_path = ''
+    if os.path.isfile(file_path):
+        file = open(file_path, 'r')
+        sort_path = file.read()
+    else:
+        file = open(file_path, 'w')
+
+    file.close()
+    
     window = Tk()
-    application = App(window)
+    application = App(window, file_path, sort_path)
     window.mainloop()
